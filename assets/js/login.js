@@ -27,6 +27,7 @@ $(function () {
         }
     })
     // 提交到数据库
+    var layer = layui.layer
     $("#form_ze").on('submit', function (e) {
         //阻止默认事件
         e.preventDefault()
@@ -39,9 +40,10 @@ $(function () {
                 password: $('.reg-box [name=password]').val(),
             },
             success: function (res) {
-                if (res.status !== 0) { return alert(res.message) }
+                if (res.status !== 0) { return layer.msg(res.message) }
                 // 当代码执行成功之后
-                alert(res.message)
+                // alert(res.message)
+                layer.msg('注册成功,请登录')
             }
         })
     })
