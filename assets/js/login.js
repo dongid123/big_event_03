@@ -70,8 +70,9 @@ $(function () {
                 }
                 // 登录成功
                 layer.msg('恭喜您,登录成功')
+                console.log(res)
                 // 保存
-                localStorage.getItem('token', res.token)
+                localStorage.setItem('token', res.token)
                 // 跳转页面
                 location.href = '/index.html'
             }
