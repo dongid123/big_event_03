@@ -26,6 +26,7 @@ $(function () {
             }
         }
     })
+
     // 提交到数据库
     var layer = layui.layer
     $("#form_ze").on('submit', function (e) {
@@ -34,7 +35,7 @@ $(function () {
         // 设置请求方式
         $.ajax({
             type: "POST",
-            url: 'http://ajax.frontend.itheima.net/api/reguser',
+            url: '/api/reguser',
             data: {
                 username: $('.reg-box [name=username]').val(),
                 password: $('.reg-box [name=password]').val(),
@@ -43,7 +44,36 @@ $(function () {
                 if (res.status !== 0) { return layer.msg(res.message) }
                 // 当代码执行成功之后
                 // alert(res.message)
-                layer.msg('注册成功,请登录')
+                layer.msg('注册成功,请登录');
+                // 模拟点击注册按钮
+                $('#login').click();
+                // 清空表单的值
+                $('#form_ze')[0].reset()
+            }
+        })
+    })
+
+    // 发送登录的请求
+    $("#formLogin").submit(function (e) {
+        // 阻止默认行为
+        e.preventDefault()
+        // 发送用户请求
+        $.ajax({
+            type: "POST",
+            url: '/api/login',
+            data: $(this).serialize(),
+            success: function (res) {
+                // console.log(res);
+                // 判断是否登录成功
+                if (res.status !== 0) {
+                    return layer.msg(res.message)
+                }
+                // 登录成功
+                layer.msg('恭喜您,登录成功')
+                // 保存
+                localStorage.getItem('token', res.token)
+                // 跳转页面
+                location.href = '/index.html'
             }
         })
     })
