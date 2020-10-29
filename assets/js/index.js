@@ -1,6 +1,17 @@
 $(function () {
     //调用函数
     gitUserInfo()
+
+    // 绑定点击退出事件
+    $("#btnReset").on('click', function () {
+        layer.confirm('是否要退出本页面?', { icon: 3, title: '提示' }, function (index) {
+            //do something
+            localStorage.removeItem('token')
+            location.href = '/login.html'
+            layer.close(index);
+        })
+    })
+
 })
 
 // 设置全局函数
@@ -9,9 +20,9 @@ function gitUserInfo() {
     $.ajax({
         type: "GET",
         url: '/my/userinfo',
-       
+
         success: function (res) {
-            console.log(res);
+            // console.log(res);
             if (res.status !== 0) {
                 return layui.layer.msg(res.massage)
             }
